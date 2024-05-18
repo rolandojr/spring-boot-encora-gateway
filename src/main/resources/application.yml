@@ -1,0 +1,23 @@
+server:
+  port: ${PORT:8090}
+
+
+info:
+  project:
+    name: @project.name@
+    description: @project.description@
+    version: @project.version@
+    artifact-id: @project.artifactId@
+
+spring:
+  application:
+    name: spring-boot-encora-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: exchange-rate
+          uri: http://${SERVICE_EXTERNAL:localhost:8080}
+          predicates:
+            - Path=/business-exchange/**
+          filters:
+            - StripPrefix=1
